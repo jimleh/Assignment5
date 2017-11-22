@@ -1,0 +1,58 @@
+﻿@model IEnumerable<MVCWarehousingSystem.Models.StockItem>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<p>@ViewBag.Message</p>
+<table class="table">
+    <tr>
+        <th>
+            <form method="post">                
+                @Html.DisplayNameFor(model => model.ArticleNumber)
+                <input type="hidden" name="sorter" value="id" />
+                <input class="sorterButton" type="submit" alt="Sort by Article Number" value="" />
+            </form>
+        </th>
+        <th>
+            <form method="post">                
+                @Html.DisplayNameFor(model => model.Quantity)
+                <input type="hidden" name="sorter" value="quantity" />
+                <input class="sorterButton" type="submit" alt="Sort by Quantity" value="" />
+            </form>
+        </th>
+        <th>            
+            <form method="post">
+                @Html.DisplayNameFor(model => model.ShelfPosition)
+                <input type="hidden" name="sorter" value="shelf" />
+                <input class="sorterButton" type="submit" alt="Sort by Shelf Position" value="" />
+            </form>
+        </th>
+        <th><p>Options</p></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ArticleNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShelfPosition)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ArticleNumber }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ArticleNumber }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ArticleNumber })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,117 @@
+﻿@model IEnumerable<MVCWarehousingSystem.Models.StockItem>
+
+@{
+    ViewBag.Title = "Search";
+    string search = ViewBag.SearchTerm as String;
+    string sort = ViewBag.SortBy as String;
+    string type = ViewBag.IsChecked as String;
+}
+
+@helper IsChecked(string type)
+{
+    if(type == ViewBag.IsChecked as String)
+    {
+<input type="radio" name="type" id="@type" value="@type" checked/>
+    }
+    else
+    {
+<input type="radio" name="type" id="@type" value="@type" />
+    }
+}
+
+
+
+<h2>Search</h2>
+
+<form method="get">
+    <input type="search" name="search" placeholder="Enter search term..." />
+    <button type="submit">Search!</button>
+    <br />
+    <label for="name">Name</label>
+    @IsChecked("name") 
+    |
+    <label for="price">Price</label>
+     @IsChecked("price") 
+    |
+    <label for="id">Article number</label>
+    @IsChecked("id")
+</form>
+
+<p>@ViewBag.Message</p>
+
+<table class="table">
+    <tr>
+        <th>
+            <form method="post" action="~/Items/Search?search=@search&type=@type">
+                @Html.DisplayNameFor(model => model.ArticleNumber)
+                <input type="hidden" name="sorter" value="id" />
+                <input class="sorterButton" type="submit" alt="Sort by Article Number" value="" />
+            </form>
+        </th>
+        <th>
+            <form method="post" action="~/Items/Search?search=@search&type=@type">
+                @Html.DisplayNameFor(model => model.Name)
+                <input type="hidden" name="sorter" value="name" />
+                <input class="sorterButton" type="submit" alt="Sort by Name" value="" />
+            </form>
+        </th>
+        <th>
+            <form method="post" action="~/Items/Search?search=@search&type=@type">
+                @Html.DisplayNameFor(model => model.Price)
+                <input type="hidden" name="sorter" value="price" />
+                <input class="sorterButton" type="submit" alt="Sort by Price" value="" />
+            </form>
+        </th>
+        <th>
+            <form method="post" action="~/Items/Search?search=@search&type=@type">
+                @Html.DisplayNameFor(model => model.ShelfPosition)
+                <input type="hidden" name="sorter" value="shelf" />
+                <input class="sorterButton" type="submit" alt="Sort by Shelf Position" value="" />
+            </form>
+        </th>
+        <th>
+            <form method="post" action="~/Items/Search?search=@search&type=@type">
+                @Html.DisplayNameFor(model => model.Quantity)
+                <input type="hidden" name="sorter" value="quantity" />
+                <input class="sorterButton" type="submit" alt="Sort by Quantity" value="" />
+            </form>
+        </th>
+        <th>
+            <form method="post" action="~/Items/Search?search=@search&type=@type">
+                @Html.DisplayNameFor(model => model.Description)
+                <input type="hidden" name="sorter" value="desc" />
+                <input class="sorterButton" type="submit" alt="Sort by Description" value="" />
+            </form>
+        </th>
+        <th><span>Options</span></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ArticleNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShelfPosition)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ArticleNumber }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ArticleNumber }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ArticleNumber })
+        </td>
+    </tr>
+}
+
+</table>
